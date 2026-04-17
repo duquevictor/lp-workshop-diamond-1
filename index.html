@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workshop CORTE — Estevão Souza</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
+  <script src="templates/digital-architect.aura.build/assets/resource_3fa48481346f.js"></script>
+  <script src="templates/digital-architect.aura.build/assets/iconify-icon_d39ffc6e4c56.js"></script>
+  <link href="templates/digital-architect.aura.build/assets/css2_19fd9cc6b396.css" rel="stylesheet" />
+
+  <style>
+    /* ========== Design system — tokens (design_system_diamond1) ========== */
+    :root {
+      --bg-body: #070A12;
+      --bg-surface: rgba(255, 255, 255, 0.03);
+      --bg-surface-2: rgba(255, 255, 255, 0.05);
+      --bg-elevated: rgba(10, 14, 26, 0.72);
+      --text-primary: rgba(248, 250, 252, 0.92);
+      --text-secondary: rgba(226, 232, 240, 0.72);
+      --text-tertiary: rgba(148, 163, 184, 0.62);
+      --border-soft: rgba(59, 130, 246, 0.18);
+      --border-quiet: rgba(148, 163, 184, 0.14);
+      --border-hover: rgba(59, 130, 246, 0.28);
+      --brand-primary: #2563EB;
+      --brand-secondary: #1E40AF;
+      --brand-accent: #60A5FA;
+      --brand-ink: #0A0E1A;
+      --status-success: #10B981;
+      --status-warning: #F59E0B;
+      --status-error: #EF4444;
+      --font-sans: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --btn-bg-dark-blue: linear-gradient(135deg, #0D1730 0%, #152647 100%);
+      --btn-bg-dark-blue-hover: linear-gradient(135deg, #122044 0%, #1A2E56 100%);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100dvh;
+      font-family: var(--font-sans);
+      background: var(--bg-body);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    ::selection {
+      background: rgba(37, 99, 235, 0.35);
+      color: rgba(248, 250, 252, 0.95);
+    }
+
+    main {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    @media (max-width: 767px) {
+      main {
+        overflow: visible;
+      }
+    }
+
+    @keyframes fadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(26px) scale(0.985);
+        filter: blur(10px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    .animate-in {
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+
+    .animate-in.active {
+      animation: fadeUp 1s var(--ease-out-expo) forwards;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(2rem);
+      transition: all 1s var(--ease-out-expo);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .text-reveal-wrapper {
+      overflow: hidden;
+      display: inline-block;
+      vertical-align: bottom;
+    }
+
+    .text-reveal-content {
+      transform: translateY(110%);
+      opacity: 0;
+      transition: transform 1.15s var(--ease-out-expo), opacity 1.15s ease;
+      display: block;
+      will-change: transform, opacity;
+    }
+
+    .reveal-active .text-reveal-content {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .delay-100 {
+      animation-delay: 0.1s;
+      transition-delay: 0.1s;
+    }
+
+    .delay-200 {
+      animation-delay: 0.2s;
+      transition-delay: 0.2s;
+    }
+
+    .delay-300 {
+      animation-delay: 0.3s;
+      transition-delay: 0.3s;
+    }
+
+    .delay-400 {
+      animation-delay: 0.4s;
+      transition-delay: 0.4s;
+    }
+
+    @keyframes beam-spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes pulse-dot {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.45;
+      }
+    }
+
+    .animate-pulse {
+      animation: pulse-dot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .font-mono {
+      font-family: var(--font-mono);
+    }
+
+    .container-xl {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .btn-beam-wrapper {
+      position: relative;
+      display: inline-flex;
+      padding: 2px;
+      border-radius: 9999px;
+      overflow: hidden;
+      cursor: pointer;
+      transform: translateZ(0);
+      transition: transform 0.3s var(--ease-out-expo);
+      border: none;
+      background: transparent;
+      font: inherit;
+    }
+
+    .btn-beam-wrapper:hover {
+      transform: scale(1.02);
+    }
+
+    .btn-beam-border {
+      position: absolute;
+      inset: -220%;
+      background: conic-gradient(from 0deg, transparent 0 310deg, rgba(59, 130, 246, 0.95) 360deg);
+      animation: beam-spin 3.2s linear infinite;
+      filter: saturate(1.05);
+    }
+
+    .btn-beam-inner {
+      position: relative;
+      background: var(--btn-bg-dark-blue);
+      color: rgba(248, 250, 252, 0.92);
+      border-radius: 9999px;
+      padding: 0.85rem 2rem;
+      font-size: 0.875rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      z-index: 1;
+      border: 1px solid rgba(59, 130, 246, 0.18);
+      backdrop-filter: blur(16px);
+      transition: background 0.3s var(--ease-out-expo);
+    }
+
+    .btn-beam-wrapper:hover .btn-beam-inner {
+      background: var(--btn-bg-dark-blue-hover);
+    }
+
+    .input-group {
+      position: relative;
+    }
+
+    .input-animated {
+      width: 100%;
+      padding: 1rem 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      color: rgba(248, 250, 252, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 0.75rem 0.75rem 0 0;
+      outline: none;
+      transition: background 0.25s ease, border-color 0.25s ease;
+      backdrop-filter: blur(12px);
+    }
+
+    .input-animated::placeholder {
+      color: rgba(148, 163, 184, 0.6);
+    }
+
+    .input-animated:focus {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(59, 130, 246, 0.22);
+    }
+
+    .input-border-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 1px;
+      width: 0%;
+      background: linear-gradient(90deg, rgba(96, 165, 250, 0.1), rgba(37, 99, 235, 0.95));
+      transition: width 0.42s var(--ease-out-expo);
+    }
+
+    .input-animated:focus+.input-border-bottom {
+      width: 100%;
+    }
+
+    .glass-card {
+      background: rgba(10, 14, 26, 0.55);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(59, 130, 246, 0.14);
+      transition: all 0.45s var(--ease-out-expo);
+    }
+
+    iconify-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ========== Hero badge (somente sobre a foto no mobile) ========== */
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      background: rgba(10, 14, 26, 0.55);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border-soft);
+    }
+
+    .hero-mobile-photo-frame>.hero-badge {
+      position: absolute;
+      top: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: var(--brand-primary);
+    }
+
+    .badge-text {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .highlight-conduz {
+      color: var(--brand-accent);
+    }
+
+    .hero-heading {
+      font-family: var(--font-sans);
+      font-size: clamp(1.75rem, 6.5vw, 2.75rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      color: var(--text-primary);
+      text-align: center;
+      text-wrap: balance;
+      -webkit-text-wrap: balance;
+      margin-left: 0;
+      margin-right: 0;
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 767px) {
+      .hero-heading__mob-line {
+        display: block;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .hero-heading__mob-line {
+        display: inline;
+      }
+    }
+
+    .h2-statement {
+      max-width: 38rem;
+      width: 100%;
+      margin: 1.75rem auto 0.9rem auto;
+      padding: 0 1.5rem;
+      font-family: var(--font-sans);
+      font-size: clamp(1.15rem, 4vw, 1.3rem);
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      text-align: center;
+    }
+
+    .h2-wrapper {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.875rem;
+      max-width: 38rem;
+      margin: 0 auto 0;
+      padding: 0 1.5rem;
+      width: 100%;
+    }
+
+    .h2-accent-bar {
+      width: 2px;
+      flex-shrink: 0;
+      background: linear-gradient(to bottom,
+          var(--brand-primary) 0%,
+          var(--brand-accent) 50%,
+          transparent 100%);
+      align-self: stretch;
+      margin-top: 0.4rem;
+    }
+
+    .h2-content {
+      flex: 1;
+    }
+
+    .h2-text {
+      margin: 0;
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      text-align: left;
+    }
+
+    .h2-highlight {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .hero-cta {
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 767px) {
+      .hero-heading {
+        margin-top: -6rem;
+        position: relative;
+        z-index: 5;
+        font-size: 1.7rem;
+      }
+
+      .hero-cta {
+        margin-top: 1.25rem;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .hero-heading {
+        margin-top: 0;
+      }
+
+      .hero-cta {
+        margin-top: 2.5rem;
+      }
+    }
+
+    .hero-cta .btn-beam-inner {
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 767px) {
+      .hero-cta .btn-beam-wrapper {
+        width: 100%;
+        display: flex;
+      }
+
+      .hero-cta .btn-beam-inner {
+        width: 100%;
+      }
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 10;
+      background: var(--bg-body);
+    }
+
+    @media (max-width: 767px) {
+      .hero-copy.container-xl {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        margin-top: -4rem;
+        position: relative;
+        z-index: 20;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .hero-copy {
+        padding-top: 7rem;
+        padding-bottom: 2rem;
+      }
+    }
+
+    /* ========== Modal formulário ========== */
+    .form-lead-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .form-lead-modal.is-open {
+      pointer-events: auto;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .form-lead-modal.is-open.is-closing {
+      pointer-events: none;
+      opacity: 0;
+      visibility: visible;
+      transition: opacity 0.3s ease;
+    }
+
+    .form-lead-modal.is-open.is-closing .form-lead-modal__panel {
+      transform: scale(0.95);
+      opacity: 0;
+      transition: transform 0.35s var(--ease-out-expo), opacity 0.35s var(--ease-out-expo);
+    }
+
+    .form-lead-modal__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(5, 7, 13, 0.82);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .form-lead-modal__panel {
+      position: relative;
+      z-index: 1;
+      width: calc(100% - 2rem);
+      max-width: 420px;
+      border-radius: 1.25rem;
+      padding: 1.75rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 25px 60px -15px rgba(37, 99, 235, 0.25);
+      transform: scale(0.95);
+      opacity: 0;
+      transition: transform 0.4s var(--ease-out-expo), opacity 0.4s var(--ease-out-expo);
+    }
+
+    .form-lead-modal.is-open .form-lead-modal__panel {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: rgba(10, 14, 26, 0.65);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .modal-close:hover {
+      border-color: var(--border-hover);
+      color: var(--text-primary);
+    }
+
+    .modal-privacy {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      line-height: 1.5;
+      color: var(--text-tertiary);
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    /* ========== Hero visual (Estevão) — não alterar camadas da foto ========== */
+    .blueprint-grid {
+      background-image:
+        linear-gradient(to right, rgba(59, 130, 246, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(59, 130, 246, 0.06) 1px, transparent 1px),
+        radial-gradient(800px circle at 18% 20%, rgba(37, 99, 235, 0.10), transparent 52%),
+        radial-gradient(900px circle at 82% 64%, rgba(96, 165, 250, 0.08), transparent 55%);
+      background-size: 56px 56px, 56px 56px, auto, auto;
+      background-position: center, center, center, center;
+    }
+
+    .noise-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.05;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+
+    .hero-bg-container {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      background: #05070d;
+      min-height: 100dvh;
+      height: auto;
+    }
+
+    .carousel-slide {
+      position: absolute;
+      inset: 0;
+      transition: opacity 1.6s ease-in-out;
+      opacity: 0;
+      overflow: hidden;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      background:
+        radial-gradient(880px circle at 18% 22%, rgba(37, 99, 235, 0.22), transparent 58%),
+        radial-gradient(980px circle at 78% 55%, rgba(96, 165, 250, 0.10), transparent 62%),
+        linear-gradient(to bottom, rgba(7, 10, 18, 0.18) 0%, rgba(7, 10, 18, 0.48) 48%, rgba(7, 10, 18, 0.94) 100%);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 100dvh;
+    }
+
+    @media (max-width: 767px) {
+      .hero.hero--fold-mobile {
+        min-height: auto;
+        max-height: none;
+        overflow: visible;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #05070d;
+    }
+
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      will-change: opacity, transform;
+      animation: heroFadeIn 1.5s var(--ease-out-expo) forwards, heroBreathe 8s ease-in-out 1.5s infinite alternate;
+    }
+
+    .hero-photo--mobile {
+      display: block;
+      object-position: center top;
+      transform-origin: center top;
+    }
+
+    .hero-photo--desktop {
+      display: none;
+      object-position: left center;
+      transform-origin: left center;
+    }
+
+    @keyframes heroFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(1);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1.02);
+      }
+    }
+
+    @keyframes heroBreathe {
+      from {
+        transform: scale(1.02);
+      }
+
+      to {
+        transform: scale(1.04);
+      }
+    }
+
+    .hero-mobile-stage {
+      display: none;
+    }
+
+    @media (max-width: 767px) {
+
+      .hero-bg-container,
+      .hero-overlay,
+      .noise-overlay {
+        display: none !important;
+      }
+
+      .hero-mobile-stage {
+        display: block;
+        position: relative;
+        z-index: 5;
+        width: 100%;
+        background: var(--bg-body);
+        padding-bottom: 0;
+        margin-bottom: 0;
+      }
+
+      .hero-mobile-photo-frame {
+        position: relative;
+        width: 100%;
+        height: 44vh;
+        min-height: 44vh;
+        overflow: visible;
+        isolation: isolate;
+        padding-bottom: 0;
+        margin-bottom: 0;
+      }
+
+      .hero-mobile-vis-layer0 {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .hero-mobile-vis-bgfill {
+        position: absolute;
+        inset: 0;
+        background: var(--bg-body);
+      }
+
+      .hero-mobile-vis-grid {
+        position: absolute;
+        inset: 0;
+        opacity: 0.4;
+      }
+
+      .hero-mobile-vis-spotlights {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 60% 50% at 30% 25%,
+            rgba(37, 99, 235, 0.35) 0%,
+            rgba(37, 99, 235, 0.15) 30%,
+            transparent 70%),
+          radial-gradient(ellipse 45% 40% at 75% 70%,
+            rgba(96, 165, 250, 0.12) 0%,
+            transparent 60%);
+      }
+
+      .hero-mobile-vis-photo {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 2;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .hero-mobile-photo-img {
+        width: 100%;
+        max-width: none;
+        height: auto;
+        display: block;
+        margin: 0;
+        object-fit: cover;
+        object-position: center top;
+        -webkit-mask-image: linear-gradient(to bottom,
+            black 0%,
+            black 35%,
+            rgba(0, 0, 0, 0.85) 50%,
+            rgba(0, 0, 0, 0.5) 65%,
+            rgba(0, 0, 0, 0.15) 80%,
+            transparent 95%);
+        mask-image: linear-gradient(to bottom,
+            black 0%,
+            black 35%,
+            rgba(0, 0, 0, 0.85) 50%,
+            rgba(0, 0, 0, 0.5) 65%,
+            rgba(0, 0, 0, 0.15) 80%,
+            transparent 95%);
+        opacity: 0;
+        animation: heroMobilePhotoIn 1s var(--ease-out-expo) forwards;
+      }
+
+      @keyframes heroMobilePhotoIn {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+      .hero-mobile-photo-fade {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 55%;
+        pointer-events: none;
+        z-index: 8;
+        background: linear-gradient(to bottom,
+            transparent 0%,
+            rgba(7, 10, 18, 0.3) 25%,
+            rgba(7, 10, 18, 0.7) 60%,
+            var(--bg-body) 100%);
+      }
+
+      .hero-transition-bridge {
+        position: absolute;
+        bottom: -80px;
+        left: 0;
+        right: 0;
+        height: 200px;
+        pointer-events: none;
+        z-index: 4;
+        background: linear-gradient(to bottom,
+            transparent 0%,
+            rgba(10, 14, 26, 0.4) 25%,
+            rgba(8, 12, 22, 0.75) 55%,
+            var(--bg-body) 85%,
+            var(--bg-body) 100%);
+      }
+
+      .hero.blueprint-grid {
+        background-image: none;
+        background-color: var(--bg-body);
+      }
+    }
+
+    @media (min-width: 768px) {
+      .hero-photo--mobile {
+        display: none !important;
+      }
+
+      .hero-photo--desktop {
+        display: block !important;
+      }
+
+      .hero {
+        display: flex;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .hero.hero--fold-mobile {
+        min-height: 100vh;
+        max-height: none;
+        overflow: visible;
+      }
+
+      .hero-bg-container {
+        position: absolute;
+        inset: 0;
+        height: 100%;
+        min-height: 100%;
+      }
+
+      .hero-media {
+        position: absolute;
+        inset: 0;
+        height: 100%;
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      33% { transform: translate(22px, -44px); }
+      66% { transform: translate(-16px, 18px); }
+    }
+
+    .section-padding {
+      padding: 3.5rem 0 6.5rem 0;
+    }
+    @media (min-width: 768px) {
+      .section-padding {
+        padding: 4.5rem 0 6.5rem 0;
+      }
+    }
+
+    .flashlight-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      border-radius: 1rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s var(--ease-out-expo);
+      padding: 1.75rem 1.875rem;
+    }
+    @media (min-width: 768px) {
+      .flashlight-card {
+        padding: 2rem;
+      }
+    }
+
+    .flashlight-card::before {
+      content: "";
+      position: absolute;
+      inset: 0px;
+      background: radial-gradient(700px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(59, 130, 246, 0.18), transparent 45%);
+      opacity: 0;
+      transition: opacity 0.5s var(--ease-out-expo);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .flashlight-card:hover::before {
+      opacity: 1;
+    }
+
+    .flashlight-card:hover {
+      border-color: rgba(59, 130, 246, 0.28);
+      transform: translateY(-5px);
+      box-shadow: 0 30px 70px -44px rgba(37, 99, 235, 0.55);
+    }
+    .section-2-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+    @media (min-width: 1024px) {
+      .section-2-cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+    }
+    
+    @media (max-width: 767px) {
+      .h1-paragraph-1 {
+        font-size: 1.0625rem;
+        line-height: 1.55;
+        letter-spacing: normal;
+        display: block;
+        margin-bottom: 0.5rem;
+        text-wrap: balance;
+        -webkit-text-wrap: balance;
+      }
+      .highlight-conduz {
+        display: block;
+        text-wrap: balance;
+        -webkit-text-wrap: balance;
+      }
+    }
+    .hero-lead-text {
+      font-family: var(--font-sans);
+      font-size: clamp(1.45rem, 5.5vw, 2rem);
+      font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: -0.015em;
+      color: rgba(248, 250, 252, 0.95);
+      text-align: center;
+      text-wrap: balance;
+      -webkit-text-wrap: balance;
+      max-width: 32rem;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+      position: relative;
+      z-index: 5;
+    }
+    @media (max-width: 480px) {
+      .hero-lead-text {
+        font-size: 1.45rem;
+        padding: 0 1rem;
+      }
+    }
+    .lead-highlight-marker {
+      position: relative;
+      display: inline-block;
+      color: rgba(248, 250, 252, 1);
+      font-weight: 700;
+      padding: 0 0.15em;
+      z-index: 1;
+    }
+    .lead-highlight-marker::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0.1em;
+      top: 45%;
+      background: linear-gradient(90deg, rgba(37, 99, 235, 0.35) 0%, rgba(59, 130, 246, 0.28) 100%);
+      border-radius: 0.15em;
+      z-index: -1;
+      transform: scaleX(0);
+      transform-origin: left center;
+      animation: highlightGrow 0.9s var(--ease-out-expo) 0.6s forwards;
+    }
+    @keyframes highlightGrow {
+      to { transform: scaleX(1); }
+    }
+    .lead-emphasis {
+      font-weight: 800;
+      color: rgba(96, 165, 250, 1);
+      background: linear-gradient(135deg, #60A5FA 0%, #93C5FD 50%, #60A5FA 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(96, 165, 250, 0.15);
+      letter-spacing: -0.02em;
+    }
+    .lead-cursor {
+      font-weight: 700;
+      color: rgba(96, 165, 250, 1);
+      display: inline-block;
+      margin-left: 0.05em;
+    }
+    .lead-cursor::after {
+      content: "";
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: #60A5FA;
+      margin-left: 0.15em;
+      vertical-align: -0.08em;
+      animation: cursorBlink 1s infinite;
+      box-shadow: 0 0 8px rgba(96, 165, 250, 0.6);
+    }
+    @keyframes cursorBlink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+  </style>
+</head>
+
+<body class="antialiased min-h-screen">
+  <main>
+    <section class="hero blueprint-grid hero--fold-mobile">
+      <div class="hero-mobile-stage">
+        <div class="hero-mobile-photo-frame">
+          <div class="hero-mobile-vis-layer0" aria-hidden="true">
+            <div class="hero-mobile-vis-bgfill"></div>
+            <div class="hero-mobile-vis-grid blueprint-grid"></div>
+          </div>
+          <div class="hero-mobile-vis-spotlights" aria-hidden="true"></div>
+          <div class="hero-mobile-vis-photo">
+            <img class="hero-mobile-photo-img" src="hero-mobile.png" alt="" decoding="async" fetchpriority="high" />
+          </div>
+          <div class="hero-mobile-photo-fade" aria-hidden="true"></div>
+          <div class="hero-transition-bridge" aria-hidden="true"></div>
+          <div class="hero-badge">
+            <span class="badge-dot animate-pulse"></span>
+            <span class="badge-text">AO VIVO • 27 DE ABRIL • 20H</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-bg-container hidden md:block">
+        <div class="carousel-slide active">
+          <div class="hero-media">
+            <img class="hero-photo hero-photo--desktop hidden md:block" src="id-estevao.png" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-overlay hidden md:block" aria-hidden="true"></div>
+      <div class="noise-overlay hidden md:block" aria-hidden="true"></div>
+
+      <div class="container-xl hero-copy">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-start">
+          <div class="hidden lg:block" aria-hidden="true"></div>
+          <div class="flex flex-col items-center">
+
+
+            <div class="hero-lead reveal delay-200">
+              <p class="hero-lead-text">
+                Seu lead já foi 
+                <span class="lead-highlight-marker">abordado por 10 closers</span> 
+                antes de você. 
+                <span class="lead-emphasis">Ele reconhece o script</span><span 
+                  class="lead-cursor">.</span>
+              </p>
+            </div>
+
+            <div class="h2-wrapper reveal delay-300" style="margin-top: 1.75rem;">
+              <div class="h2-content">
+                <p class="h2-text">
+                  Neste Workshop eu vou te entregar a metodologia que eu e
+                  <span class="h2-highlight">+200 closers</span> usamos para quebrar
+                  essa resistência e fechar
+                  <span class="h2-highlight">high ticket todos os dias</span>.
+                </p>
+              </div>
+            </div>
+
+            <div class="hero-cta reveal delay-400">
+              <button type="button" class="btn-beam-wrapper w-full md:w-auto" onclick="openFormModal()">
+                <span class="btn-beam-border"></span>
+                <span class="btn-beam-inner text-sm">
+                  QUERO PARTICIPAR DO WORKSHOP
+                  <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="o-que-voce-vai-aprender" class="blueprint-grid relative overflow-hidden" style="padding-top: 1.5rem; padding-bottom: 4rem;">
+      <!-- Orbs decorativos de fundo -->
+      <div class="absolute top-10 -left-20 w-72 h-72 rounded-full blur-3xl bg-blue-600/10 animate-[float_14s_infinite_ease-in-out] pointer-events-none"></div>
+      <div class="absolute bottom-20 -right-20 w-96 h-96 rounded-full blur-3xl bg-blue-500/8 animate-[float_18s_infinite_ease-in-out_reverse] pointer-events-none"></div>
+
+      <div class="container-xl relative z-10">
+        <!-- BLOCO A — EYEBROW -->
+        <div class="reveal flex w-full mb-6" style="margin-bottom: 3.5rem; justify-content: center; align-items: center; gap: 0.75rem;">
+          <span class="h-px bg-blue-500/50" style="width: 2rem;"></span>
+          <h2 class="font-mono text-4xl md:text-5xl lg:text-6xl font-medium uppercase text-slate-200/55 leading-[1.1]" style="text-align: center; letter-spacing: 0.22em; margin-right: -0.22em;">
+            <span class="lead-emphasis">O QUE VOCÊ VAI APRENDER</span><span class="lead-cursor"></span>
+          </h2>
+          <span class="h-px bg-blue-500/50" style="width: 2rem;"></span>
+        </div>
+
+
+        <!-- BLOCO D — GRID DE 3 CARDS -->
+        <div class="section-2-cards-grid max-w-6xl mx-auto">
+          <!-- CARD 1 -->
+          <article class="flashlight-card reveal group h-full">
+            <div class="flex items-start justify-between mb-6">
+              <!-- Numeração à esquerda -->
+              <span class="font-mono text-xs uppercase tracking-[0.22em] text-slate-200/45">
+                01
+              </span>
+              <!-- Ícone decorativo à direita (sutil) -->
+              <iconify-icon icon="solar:diamond-bold-duotone" class="text-2xl text-blue-400/35 transition-colors duration-300 group-hover:text-blue-400/70"></iconify-icon>
+            </div>
+            <h3 class="text-xl md:text-2xl font-bold tracking-tight text-slate-50/95 leading-tight mb-4">
+              Por que o script parou de funcionar
+            </h3>
+            <p class="text-base leading-relaxed text-slate-200/70 font-normal">
+              O lead de hoje já reconhece o padrão. Você vai entender o que mudou — e como parar de soar como roteiro decorado.
+            </p>
+          </article>
+
+          <!-- CARD 2 -->
+          <article class="flashlight-card reveal delay-100 group h-full">
+            <div class="flex items-start justify-between mb-6">
+              <!-- Numeração à esquerda -->
+              <span class="font-mono text-xs uppercase tracking-[0.22em] text-slate-200/45">
+                02
+              </span>
+              <!-- Ícone decorativo à direita (sutil) -->
+              <iconify-icon icon="solar:crown-star-bold-duotone" class="text-2xl text-blue-400/35 transition-colors duration-300 group-hover:text-blue-400/70"></iconify-icon>
+            </div>
+            <h3 class="text-xl md:text-2xl font-bold tracking-tight text-slate-50/95 leading-tight mb-4">
+              O ponto exato onde a venda se perde
+            </h3>
+            <p class="text-base leading-relaxed text-slate-200/70 font-normal">
+              Não é na objeção. Não é no preço. É antes — num momento que quase ninguém identifica sozinho. Estevão vai mostrar qual é, ao vivo.
+            </p>
+          </article>
+
+          <!-- CARD 3 -->
+          <article class="flashlight-card reveal delay-200 group h-full">
+            <div class="flex items-start justify-between mb-6">
+              <!-- Numeração à esquerda -->
+              <span class="font-mono text-xs uppercase tracking-[0.22em] text-slate-200/45">
+                03
+              </span>
+              <!-- Ícone decorativo à direita (sutil) -->
+              <iconify-icon icon="solar:compass-big-bold-duotone" class="text-2xl text-blue-400/35 transition-colors duration-300 group-hover:text-blue-400/70"></iconify-icon>
+            </div>
+            <h3 class="text-xl md:text-2xl font-bold tracking-tight text-slate-50/95 leading-tight mb-4">
+              Conduzir em vez de convencer
+            </h3>
+            <p class="text-base leading-relaxed text-slate-200/70 font-normal">
+              A diferença entre quem fecha 20% e quem fecha 50%. Você vai sair com o mapa completo de condução de call — com ou sem script.
+            </p>
+          </article>
+        </div>
+
+        <!-- BLOCO E — CTA FINAL -->
+        <div class="flex flex-col items-center gap-6 reveal delay-300 px-4 md:px-0" style="margin-top: 2.5rem;">
+          <button class="btn-beam-wrapper w-full md:w-auto" onclick="openFormModal()">
+            <span class="btn-beam-border"></span>
+            <span class="btn-beam-inner w-full md:w-auto justify-center">
+              QUERO GARANTIR MEU LUGAR — É GRATUITO
+              <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
+            </span>
+          </button>
+          <p class="font-mono text-[10px] md:text-xs uppercase tracking-[0.1em] md:tracking-[0.2em] text-slate-200/45 text-center mt-6 whitespace-nowrap">
+            27 de abril • 20h • ao vivo no YouTube
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== SEÇÃO 3: O MENTOR ======== -->
+    <section id="quem-e-estevao" class="section-padding blueprint-grid relative overflow-hidden" style="padding-top: 1.5rem; padding-bottom: 4rem;">
+      <!-- Orbs decorativos de fundo -->
+      <div class="absolute top-10 -left-20 w-72 h-72 rounded-full blur-3xl bg-blue-600/10 animate-[float_14s_infinite_ease-in-out] pointer-events-none"></div>
+      <div class="absolute bottom-20 -right-20 w-96 h-96 rounded-full blur-3xl bg-blue-500/8 animate-[float_18s_infinite_ease-in-out_reverse] pointer-events-none"></div>
+      
+      <div class="container-xl relative z-10">
+        
+        <!-- BLOCO PRINCIPAL — TÍTULO DA SEÇÃO (H2) -->
+        <h2 class="reveal flex items-center justify-center text-center max-w-3xl mx-auto text-4xl md:text-5xl lg:text-6xl font-mono uppercase tracking-[0.22em] font-medium leading-[1.1] text-slate-50/95 mb-12 md:mb-16 pl-[0.22em]">
+          <span class="lead-emphasis">QUEM SERÁ SEU MENTOR</span><span class="lead-cursor">?</span>
+        </h2>
+        
+        <!-- BLOCO C — FOTO + BIO -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start max-w-6xl mx-auto">
+          
+          <!-- COLUNA FOTO -->
+          <div class="lg:col-span-5 reveal">
+            <div class="relative group">
+              <!-- Wireframe de diamante decorativo de fundo -->
+              <div class="absolute -top-6 -right-6 w-32 h-32 opacity-20 pointer-events-none" aria-hidden="true">
+                <iconify-icon icon="solar:diamond-linear" class="text-[8rem] text-blue-400"></iconify-icon>
+              </div>
+              
+              <!-- Container da foto com efeito premium -->
+              <div class="flashlight-card p-0 overflow-hidden aspect-[4/5] relative">
+                <img src="bio-estevao.png" onerror="this.onerror=null; this.src='hero-mobile.png';" alt="Estevão Souza" class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105">
+                
+                <!-- Overlay radial azul + vignette inferior -->
+                <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(600px circle at 50% 20%, rgba(37,99,235,0.25), transparent 55%), linear-gradient(to top, rgba(7,10,18,0.85) 0%, rgba(7,10,18,0.2) 35%, transparent 60%);"></div>
+                
+                <!-- Badge/label sobreposto no canto inferior -->
+                <div class="absolute bottom-5 left-5 right-5 flex items-center justify-between">
+                  <div>
+                    <p class="font-bold text-lg text-slate-50/95 leading-tight">Estevão Souza</p>
+                    <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-blue-300/80 mt-1">Co-fundador • Closer Diamond</p>
+                  </div>
+                  <iconify-icon icon="solar:diamond-bold-duotone" class="text-2xl text-blue-400/70"></iconify-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- COLUNA BIO -->
+          <div class="lg:col-span-7 space-y-5 reveal delay-100">
+            <!-- Parágrafo 1 -->
+            <p class="text-lg md:text-xl leading-relaxed text-slate-50/85 font-normal">
+              Estevão Souza tem <span class="text-slate-50/95 font-semibold">8 anos de experiência</span> em vendas no modelo 1 a 1 e nos últimos 2 anos se tornou <span class="text-slate-50/95 font-semibold">referência nacional em fechamento de vendas high ticket em reunião</span>.
+            </p>
+            
+            <!-- Parágrafo 2 -->
+            <p class="text-base md:text-lg leading-relaxed text-slate-200/75 font-normal">
+              Resultado de uma metodologia <span class="text-slate-50/95 font-medium">construída e refinada na prática</span>, call a call, não como teoria.
+            </p>
+            
+            <!-- Parágrafo 3 -->
+            <p class="text-base md:text-lg leading-relaxed text-slate-200/75 font-normal">
+              Co-fundador do <span class="text-slate-50/95 font-semibold">Ecossistema Closer Diamond</span>, criou a <span class="text-blue-400 font-semibold">Metodologia DIAMOND</span> — um sistema de condução de call aplicado por <span class="text-slate-50/95 font-semibold">+200 alunos</span> em diferentes nichos, com fechamentos documentados de <span class="text-slate-50/95 font-semibold">R$30k, R$50k e até R$73k por cliente</span>.
+            </p>
+          </div>
+          
+        </div>
+        
+        <!-- BLOCO D — BARRA DE CREDENCIAIS (3 STAT CARDS) -->
+        <div class="mt-14 md:mt-20 grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto reveal delay-200">
+          
+          <!-- Stat 1 -->
+          <div class="flashlight-card p-6 md:p-7">
+            <iconify-icon icon="solar:phone-calling-bold-duotone" class="text-3xl text-blue-400 mb-4"></iconify-icon>
+            <h3 class="text-4xl md:text-5xl font-black tracking-tight text-slate-50/95 leading-none">+1.000</h3>
+            <p class="text-sm text-slate-200/60 mt-2 font-medium">calls de venda realizadas</p>
+          </div>
+          
+          <!-- Stat 2 -->
+          <div class="flashlight-card p-6 md:p-7">
+            <iconify-icon icon="solar:dollar-minimalistic-bold-duotone" class="text-3xl text-blue-400 mb-4"></iconify-icon>
+            <h3 class="text-4xl md:text-5xl font-black tracking-tight text-slate-50/95 leading-none">R$ 10M+</h3>
+            <p class="text-sm text-slate-200/60 mt-2 font-medium">faturados como closer</p>
+          </div>
+          
+          <!-- Stat 3 -->
+          <div class="flashlight-card p-6 md:p-7">
+            <iconify-icon icon="solar:chart-square-bold-duotone" class="text-3xl text-blue-400 mb-4"></iconify-icon>
+            <h3 class="text-4xl md:text-5xl font-black tracking-tight text-slate-50/95 leading-none">R$ 500K</h3>
+            <p class="text-sm text-slate-200/60 mt-2 font-medium">em vendas fechadas todos os meses</p>
+          </div>
+          
+        </div>
+        
+        <!-- BLOCO E — MANIFESTO -->
+        <div class="mt-16 md:mt-24 max-w-3xl mx-auto text-center reveal delay-300">
+          
+          <!-- Aspas decorativas no topo -->
+          <div class="flex justify-center mb-4">
+            <iconify-icon icon="solar:quote-up-bold" class="text-4xl text-blue-400/40"></iconify-icon>
+          </div>
+          
+          <!-- Manifesto -->
+          <blockquote class="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight leading-[1.3] text-slate-50/95 px-4">
+            Minha missão <span class="text-slate-200/55 font-normal">não é ensinar scripts</span>. É mostrar <span class="text-blue-400">por que cada decisão dentro de uma call existe</span>, para que o closer consiga <span class="text-slate-50/95">conduzir com consistência</span> — independente do perfil do lead ou do momento do mercado.
+          </blockquote>
+          
+          <!-- Assinatura -->
+          <div class="mt-6 flex items-center justify-center gap-3">
+            <span class="h-px w-10 bg-blue-500/50"></span>
+            <span class="font-mono text-xs uppercase tracking-[0.22em] text-slate-200/60">ESTEVÃO SOUZA</span>
+            <span class="h-px w-10 bg-blue-500/50"></span>
+          </div>
+          
+        </div>
+        
+        <!-- BLOCO F — CTA FINAL DA SEÇÃO -->
+        <div class="mt-16 md:mt-20 flex flex-col items-center gap-4 reveal delay-400">
+          
+          <!-- Frase-ponte acima do botão -->
+          <p class="text-center text-base md:text-lg text-slate-200/75 max-w-2xl mx-auto mb-2 px-4">
+            No Workshop do dia 27/04, eu vou te mostrar ao vivo <span class="text-slate-50/95 font-medium">o que aprendi em mais de mil reuniões de vendas</span>.
+          </p>
+          
+          <!-- Info de data/canal -->
+          <p class="font-mono text-[10px] md:text-xs uppercase tracking-[0.15em] md:tracking-[0.2em] text-slate-200/55 mb-2 text-center px-4">
+            Segunda-feira, 27 de abril • 20h (Brasília) • Ao vivo no YouTube
+          </p>
+          
+          <!-- Botão CTA -->
+          <button class="btn-beam-wrapper" onclick="openFormModal()">
+            <span class="btn-beam-border"></span>
+            <span class="btn-beam-inner text-center font-mono text-[10px] md:text-sm tracking-widest">
+              GARANTIR MEU LUGAR AGORA — ACESSO GRATUITO
+              <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
+            </span>
+          </button>
+          
+          <!-- Disclaimer de vagas limitadas (scarcity) -->
+          <p class="text-center text-xs md:text-sm text-slate-200/55 max-w-xl mx-auto mt-3 leading-relaxed px-4">
+            Vagas limitadas para o grupo de acompanhamento ao vivo. Inscreva-se e receba o link de acesso no seu WhatsApp.
+          </p>
+          
+        </div>
+        
+      </div>
+    </section>
+  </main>
+
+  <div id="form-lead-modal" class="form-lead-modal" role="dialog" aria-modal="true" aria-hidden="true"
+    aria-labelledby="form-lead-modal-title">
+    <div class="form-lead-modal__backdrop" data-form-modal-dismiss></div>
+    <div class="form-lead-modal__panel">
+      <button type="button" class="modal-close" data-form-modal-dismiss aria-label="Fechar">
+        <iconify-icon icon="solar:close-square-linear" class="text-xl"></iconify-icon>
+      </button>
+      <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--text-tertiary);">
+        // GARANTIR MEU LUGAR GRATUITO
+      </p>
+      <h2 id="form-lead-modal-title" class="text-xl font-semibold"
+        style="color: var(--text-primary); margin-top: 0.5rem; margin-bottom: 1.5rem;">
+        Complete seu cadastro
+      </h2>
+      <form id="form-lead-modal-form" class="space-y-4" autocomplete="on">
+        <div class="input-group">
+          <input id="form-lead-nome" type="text" name="nome" placeholder="Seu nome completo" class="input-animated"
+            required />
+          <div class="input-border-bottom"></div>
+        </div>
+        <div class="input-group">
+          <input type="email" name="email" placeholder="seu@melhor-email.com" class="input-animated" required />
+          <div class="input-border-bottom"></div>
+        </div>
+        <div class="input-group">
+          <input type="tel" name="telefone" placeholder="(DDD) 00000-0000" class="input-animated" required />
+          <div class="input-border-bottom"></div>
+        </div>
+        <button class="btn-beam-wrapper w-full" type="submit" style="display: block;">
+          <span class="btn-beam-border"></span>
+          <span class="btn-beam-inner font-mono text-xs uppercase tracking-widest">
+            CONFIRMAR INSCRIÇÃO →
+          </span>
+        </button>
+      </form>
+      <p class="modal-privacy">
+        Seus dados estão protegidos. Usaremos apenas para enviar o link do workshop.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function openFormModal() {
+      const modal = document.getElementById('form-lead-modal');
+      if (!modal) return;
+      if (modal._closeTimer) {
+        clearTimeout(modal._closeTimer);
+        modal._closeTimer = null;
+      }
+      modal.classList.remove('is-closing');
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      document.addEventListener('keydown', onFormModalKeydown);
+      window.requestAnimationFrame(function () {
+        var el = document.getElementById('form-lead-nome');
+        if (el && el.focus) el.focus({ preventScroll: true });
+      });
+    }
+
+    function closeFormModal() {
+      const modal = document.getElementById('form-lead-modal');
+      if (!modal || !modal.classList.contains('is-open') || modal.classList.contains('is-closing')) return;
+      modal.classList.add('is-closing');
+      document.removeEventListener('keydown', onFormModalKeydown);
+      modal._closeTimer = window.setTimeout(function () {
+        modal.classList.remove('is-open', 'is-closing');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        modal._closeTimer = null;
+      }, 380);
+    }
+
+    function onFormModalKeydown(e) {
+      const modal = document.getElementById('form-lead-modal');
+      if (!modal || !modal.classList.contains('is-open') || modal.classList.contains('is-closing')) return;
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeFormModal();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.flashlight-card').forEach(function (card) {
+        card.addEventListener('mousemove', function (e) {
+          var rect = card.getBoundingClientRect();
+          var x = e.clientX - rect.left;
+          var y = e.clientY - rect.top;
+          card.style.setProperty('--mouse-x', x + 'px');
+          card.style.setProperty('--mouse-y', y + 'px');
+        });
+      });
+
+      var modal = document.getElementById('form-lead-modal');
+      if (modal) {
+        modal.querySelectorAll('[data-form-modal-dismiss]').forEach(function (el) {
+          el.addEventListener('click', function () {
+            closeFormModal();
+          });
+        });
+      }
+
+      document.getElementById('form-lead-modal-form') && document.getElementById('form-lead-modal-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        closeFormModal();
+      });
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            entry.target.classList.add('reveal-active');
+          }
+        });
+      }, { threshold: 0.12 });
+
+      document.querySelectorAll('.reveal, .animate-in').forEach(function (el) {
+        observer.observe(el);
+      });
+      document.querySelectorAll('.text-reveal-content').forEach(function (el) {
+        var host = el.closest('.reveal') || el.closest('h1') || el.closest('div');
+        if (host) observer.observe(host);
+      });
+    });
+  </script>
+</body>
+
+</html>
