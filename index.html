@@ -1167,6 +1167,57 @@
       0%, 49% { opacity: 1; }
       50%, 100% { opacity: 0; }
     }
+
+    @media (min-width: 768px) {
+      /* Seção 2: O Que Você Vai Aprender */
+      #o-que-voce-vai-aprender {
+          padding-top: 6rem !important;
+          padding-bottom: 6rem !important;
+      }
+      
+      #o-que-voce-vai-aprender h2,
+      [id*="aprender"] h2 {
+          font-size: clamp(1.5rem, 2.5vw, 2.25rem) !important;
+          letter-spacing: 0.16em !important;
+          line-height: 1.2 !important;
+      }
+      
+      #o-que-voce-vai-aprender h2 + span.h-px,
+      #o-que-voce-vai-aprender span.h-px {
+          width: 3rem !important;
+      }
+      
+      #o-que-voce-vai-aprender .section-2-cards-grid {
+          align-items: stretch !important;
+      }
+      
+      #o-que-voce-vai-aprender .flashlight-card,
+      #o-que-voce-vai-aprender article.flashlight-card {
+          display: flex !important;
+          flex-direction: column !important;
+          height: 100% !important;
+          min-height: 280px;
+          padding: 2.5rem 2rem !important;
+      }
+      
+      #o-que-voce-vai-aprender .flashlight-card h3 {
+          margin-bottom: 1rem !important;
+      }
+      
+      #o-que-voce-vai-aprender .flashlight-card p {
+          flex-grow: 1;
+      }
+      
+      #o-que-voce-vai-aprender .flashlight-card.group:hover iconify-icon[aria-hidden="true"] {
+          color: rgba(96, 165, 250, 0.28) !important;
+          transform: scale(1.05);
+      }
+
+      #o-que-voce-vai-aprender .btn-beam-inner {
+          padding: 1.15rem 2.8rem !important;
+          font-size: 1.05rem !important;
+      }
+    }
   </style>
 </head>
 
@@ -1267,57 +1318,30 @@
         <!-- BLOCO D — GRID DE 3 CARDS -->
         <div class="section-2-cards-grid max-w-6xl mx-auto">
           <!-- CARD 1 -->
-          <article class="flashlight-card reveal group h-full">
-            <div class="flex items-start justify-between mb-6">
-              <!-- Numeração à esquerda -->
-              <span class="font-mono text-xs uppercase tracking-[0.22em] text-slate-200/45">
-                01
-              </span>
-              <!-- Ícone decorativo à direita (sutil) -->
-              <iconify-icon icon="solar:diamond-bold-duotone" class="text-2xl text-blue-400/35 transition-colors duration-300 group-hover:text-blue-400/70"></iconify-icon>
-            </div>
-            <h3 class="text-xl md:text-2xl font-bold tracking-tight text-slate-50/95 leading-tight mb-4">
-              Por que o script parou de funcionar
-            </h3>
-            <p class="text-base leading-relaxed text-slate-200/70 font-normal">
-              O lead de hoje já reconhece o padrão. Você vai entender o que mudou — e como parar de soar como roteiro decorado.
-            </p>
+          <article class="flashlight-card p-6 reveal group relative overflow-hidden">
+            <iconify-icon icon="solar:bug-linear" class="absolute top-5 right-5 pointer-events-none transition-all duration-500" style="font-size: 5rem; color: rgba(96, 165, 250, 0.12); z-index: 1;" aria-hidden="true"></iconify-icon>
+            <span class="relative font-mono text-xs uppercase tracking-widest text-slate-200/45 block mb-4" style="z-index: 2;">01 // ARMADILHA</span>
+            <h3 class="relative text-xl md:text-2xl font-bold tracking-tight text-slate-50/95 leading-tight mb-3" style="z-index: 2;">Por que o script parou de funcionar</h3>
+            <div class="relative h-px w-10 bg-gradient-to-r from-blue-500/70 to-transparent mb-4" style="z-index: 2;"></div>
+            <p class="relative text-base leading-relaxed text-slate-200/70" style="z-index: 2;">O lead de hoje já reconhece o padrão. Você vai entender o que mudou — e como parar de soar como roteiro decorado.</p>
           </article>
 
           <!-- CARD 2 -->
-          <article class="flashlight-card reveal delay-100 group h-full">
-            <div class="flex items-start justify-between mb-6">
-              <!-- Numeração à esquerda -->
-              <span class="font-mono text-xs uppercase tracking-[0.22em] text-slate-200/45">
-                02
-              </span>
-              <!-- Ícone decorativo à direita (sutil) -->
-              <iconify-icon icon="solar:crown-star-bold-duotone" class="text-2xl text-blue-400/35 transition-colors duration-300 group-hover:text-blue-400/70"></iconify-icon>
-            </div>
-            <h3 class="text-xl md:text-2xl font-bold tracking-tight text-slate-50/95 leading-tight mb-4">
-              O ponto exato onde a venda se perde
-            </h3>
-            <p class="text-base leading-relaxed text-slate-200/70 font-normal">
-              Não é na objeção. Não é no preço. É antes — num momento que quase ninguém identifica sozinho. Estevão vai mostrar qual é, ao vivo.
-            </p>
+          <article class="flashlight-card p-6 reveal delay-100 group relative overflow-hidden">
+            <iconify-icon icon="solar:target-linear" class="absolute top-5 right-5 pointer-events-none transition-all duration-500" style="font-size: 5rem; color: rgba(96, 165, 250, 0.12); z-index: 1;" aria-hidden="true"></iconify-icon>
+            <span class="relative font-mono text-xs uppercase tracking-widest text-slate-200/45 block mb-4" style="z-index: 2;">02 // PONTO CEGO</span>
+            <h3 class="relative text-xl md:text-2xl font-bold tracking-tight text-slate-50/95 leading-tight mb-3" style="z-index: 2;">O ponto exato onde a venda se perde</h3>
+            <div class="relative h-px w-10 bg-gradient-to-r from-blue-500/70 to-transparent mb-4" style="z-index: 2;"></div>
+            <p class="relative text-base leading-relaxed text-slate-200/70" style="z-index: 2;">Não é na objeção. Não é no preço. É antes — num momento que quase ninguém identifica sozinho. Estevão vai mostrar qual é, ao vivo.</p>
           </article>
 
           <!-- CARD 3 -->
-          <article class="flashlight-card reveal delay-200 group h-full">
-            <div class="flex items-start justify-between mb-6">
-              <!-- Numeração à esquerda -->
-              <span class="font-mono text-xs uppercase tracking-[0.22em] text-slate-200/45">
-                03
-              </span>
-              <!-- Ícone decorativo à direita (sutil) -->
-              <iconify-icon icon="solar:compass-big-bold-duotone" class="text-2xl text-blue-400/35 transition-colors duration-300 group-hover:text-blue-400/70"></iconify-icon>
-            </div>
-            <h3 class="text-xl md:text-2xl font-bold tracking-tight text-slate-50/95 leading-tight mb-4">
-              Conduzir em vez de convencer
-            </h3>
-            <p class="text-base leading-relaxed text-slate-200/70 font-normal">
-              A diferença entre quem fecha 20% e quem fecha 50%. Você vai sair com o mapa completo de condução de call — com ou sem script.
-            </p>
+          <article class="flashlight-card p-6 reveal delay-200 group relative overflow-hidden">
+            <iconify-icon icon="solar:compass-big-linear" class="absolute top-5 right-5 pointer-events-none transition-all duration-500" style="font-size: 5rem; color: rgba(96, 165, 250, 0.12); z-index: 1;" aria-hidden="true"></iconify-icon>
+            <span class="relative font-mono text-xs uppercase tracking-widest text-slate-200/45 block mb-4" style="z-index: 2;">03 // CONDUÇÃO</span>
+            <h3 class="relative text-xl md:text-2xl font-bold tracking-tight text-slate-50/95 leading-tight mb-3" style="z-index: 2;">Conduzir em vez de convencer</h3>
+            <div class="relative h-px w-10 bg-gradient-to-r from-blue-500/70 to-transparent mb-4" style="z-index: 2;"></div>
+            <p class="relative text-base leading-relaxed text-slate-200/70" style="z-index: 2;">A diferença entre quem fecha 20% e quem fecha 50%. Você vai sair com o mapa completo de condução de call — com ou sem script.</p>
           </article>
         </div>
 
