@@ -874,6 +874,10 @@
         display: none;
       }
 
+      .sec3-h2-line {
+        display: none;
+      }
+
       .hero.blueprint-grid {
         background-image: none;
         background-color: var(--bg-body);
@@ -1176,7 +1180,8 @@
       }
       
       #o-que-voce-vai-aprender h2,
-      [id*="aprender"] h2 {
+      [id*="aprender"] h2,
+      #quem-e-estevao h2 {
           font-size: clamp(1.5rem, 2.5vw, 2.25rem) !important;
           letter-spacing: 0.16em !important;
           line-height: 1.2 !important;
@@ -1216,6 +1221,45 @@
       #o-que-voce-vai-aprender .btn-beam-inner {
           padding: 1.15rem 2.8rem !important;
           font-size: 1.05rem !important;
+      }
+
+      /* ===== Seção 3: Quem Será Seu Mentor ===== */
+      #quem-e-estevao {
+          padding-top: 6rem !important;
+          padding-bottom: 6rem !important;
+      }
+
+      #quem-e-estevao .sec3-stat-grid {
+          max-width: none;
+          gap: 1rem;
+          align-items: stretch;
+          margin-top: 1.75rem;
+      }
+
+      #quem-e-estevao .sec3-stat-grid .flashlight-card {
+          display: flex !important;
+          flex-direction: column !important;
+          height: 100% !important;
+          min-height: auto;
+          padding: 1.25rem 1.125rem !important;
+      }
+
+      #quem-e-estevao .sec3-stat-grid .flashlight-card iconify-icon {
+          font-size: 1.375rem !important;
+          margin-bottom: 0 !important;
+      }
+
+      #quem-e-estevao .sec3-stat-grid .flashlight-card h3 {
+          font-size: clamp(1.35rem, 1.7vw, 1.625rem) !important;
+          letter-spacing: -0.02em !important;
+          margin-bottom: 0.2rem !important;
+          white-space: nowrap;
+      }
+
+      #quem-e-estevao .sec3-stat-grid .flashlight-card p {
+          flex-grow: 1;
+          font-size: 0.775rem !important;
+          line-height: 1.4 !important;
       }
     }
   </style>
@@ -1370,9 +1414,13 @@
       <div class="container-xl relative z-10">
         
         <!-- BLOCO PRINCIPAL — TÍTULO DA SEÇÃO (H2) -->
-        <h2 class="reveal flex items-center justify-center text-center max-w-3xl mx-auto text-2xl md:text-5xl lg:text-6xl font-mono uppercase tracking-[0.22em] font-medium leading-[1.1] text-slate-50/95 mb-12 md:mb-16 pl-[0.22em]">
-          <span class="lead-emphasis">QUEM SERÁ SEU MENTOR</span><span class="lead-cursor">?</span>
-        </h2>
+        <div class="reveal flex w-full mb-12 md:mb-16" style="justify-content: center; align-items: center; gap: 0.75rem;">
+          <span class="sec3-h2-line h-px bg-blue-500/50" style="width: 2rem; flex-shrink: 0;"></span>
+          <h2 class="font-mono text-2xl md:text-5xl lg:text-6xl font-medium uppercase text-slate-200/55 leading-[1.1]" style="text-align: center; letter-spacing: 0.22em; margin-right: -0.22em;">
+            <span class="lead-emphasis">QUEM SERÁ SEU MENTOR</span><span class="lead-cursor">?</span>
+          </h2>
+          <span class="sec3-h2-line h-px bg-blue-500/50" style="width: 2rem; flex-shrink: 0;"></span>
+        </div>
         
         <!-- BLOCO C — FOTO + BIO -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start max-w-6xl mx-auto">
@@ -1420,32 +1468,38 @@
             <p class="text-base md:text-lg leading-relaxed text-slate-200/75 font-normal">
               Co-fundador do <span class="text-slate-50/95 font-semibold">Ecossistema Closer Diamond</span>, criou a <span class="text-blue-400 font-semibold">Metodologia DIAMOND</span> — um sistema de condução de call aplicado por <span class="text-slate-50/95 font-semibold">+200 alunos</span> em diferentes nichos, com fechamentos documentados de <span class="text-slate-50/95 font-semibold">R$30k, R$50k e até R$73k por cliente</span>.
             </p>
-          </div>
-          
-        </div>
-        
-        <!-- BLOCO D — BARRA DE CREDENCIAIS (3 STAT CARDS) -->
-        <div class="mt-14 md:mt-20 grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto reveal delay-200">
-          
-          <!-- Stat 1 -->
-          <div class="flashlight-card p-6 md:p-7">
-            <iconify-icon icon="solar:phone-calling-bold-duotone" class="text-3xl text-blue-400 mb-4"></iconify-icon>
-            <h3 class="text-4xl md:text-5xl font-black tracking-tight text-slate-50/95 leading-none">+1.000</h3>
-            <p class="text-sm text-slate-200/60 mt-2 font-medium">calls de venda realizadas</p>
-          </div>
-          
-          <!-- Stat 2 -->
-          <div class="flashlight-card p-6 md:p-7">
-            <iconify-icon icon="solar:dollar-minimalistic-bold-duotone" class="text-3xl text-blue-400 mb-4"></iconify-icon>
-            <h3 class="text-4xl md:text-5xl font-black tracking-tight text-slate-50/95 leading-none">R$ 10M+</h3>
-            <p class="text-sm text-slate-200/60 mt-2 font-medium">faturados como closer</p>
-          </div>
-          
-          <!-- Stat 3 -->
-          <div class="flashlight-card p-6 md:p-7">
-            <iconify-icon icon="solar:chart-square-bold-duotone" class="text-3xl text-blue-400 mb-4"></iconify-icon>
-            <h3 class="text-4xl md:text-5xl font-black tracking-tight text-slate-50/95 leading-none">R$ 500K</h3>
-            <p class="text-sm text-slate-200/60 mt-2 font-medium">em vendas fechadas todos os meses</p>
+
+            <!-- BLOCO D — BARRA DE CREDENCIAIS (3 STAT CARDS) -->
+            <div class="sec3-stat-grid mt-8 grid grid-cols-1 md:grid-cols-3 gap-3">
+              
+              <!-- Stat 1 -->
+              <div class="flashlight-card p-6 md:p-7">
+                <span class="relative font-mono text-xs uppercase tracking-widest text-slate-200/45 block mb-3 hidden md:block" style="z-index: 2;">01 // VOLUME</span>
+                <iconify-icon icon="solar:phone-calling-bold-duotone" class="text-3xl text-blue-400 mb-3"></iconify-icon>
+                <div class="hidden md:block h-px w-10 bg-gradient-to-r from-blue-500/70 to-transparent mb-4"></div>
+                <h3 class="text-4xl md:text-5xl font-black tracking-tight text-slate-50/95 leading-none">+1.000</h3>
+                <p class="text-sm text-slate-200/60 mt-2 font-medium">calls de venda realizadas</p>
+              </div>
+              
+              <!-- Stat 2 -->
+              <div class="flashlight-card p-6 md:p-7">
+                <span class="relative font-mono text-xs uppercase tracking-widest text-slate-200/45 block mb-3 hidden md:block" style="z-index: 2;">02 // RESULTADO</span>
+                <iconify-icon icon="solar:dollar-minimalistic-bold-duotone" class="text-3xl text-blue-400 mb-3"></iconify-icon>
+                <div class="hidden md:block h-px w-10 bg-gradient-to-r from-blue-500/70 to-transparent mb-4"></div>
+                <h3 class="text-4xl md:text-5xl font-black tracking-tight text-slate-50/95 leading-none">R$ 10M+</h3>
+                <p class="text-sm text-slate-200/60 mt-2 font-medium">faturados como closer</p>
+              </div>
+              
+              <!-- Stat 3 -->
+              <div class="flashlight-card p-6 md:p-7">
+                <span class="relative font-mono text-xs uppercase tracking-widest text-slate-200/45 block mb-3 hidden md:block" style="z-index: 2;">03 // CONSISTÊNCIA</span>
+                <iconify-icon icon="solar:chart-square-bold-duotone" class="text-3xl text-blue-400 mb-3"></iconify-icon>
+                <div class="hidden md:block h-px w-10 bg-gradient-to-r from-blue-500/70 to-transparent mb-4"></div>
+                <h3 class="text-4xl md:text-5xl font-black tracking-tight text-slate-50/95 leading-none">R$ 500K</h3>
+                <p class="text-sm text-slate-200/60 mt-2 font-medium">em vendas fechadas todos os meses</p>
+              </div>
+              
+            </div>
           </div>
           
         </div>
