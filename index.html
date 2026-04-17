@@ -1601,6 +1601,84 @@
   </div>
 
   <script>
+    // ── UTM CAPTURE ──────────────────────────────────────────
+    function getUtmParams() {
+      var p = new URLSearchParams(window.location.search);
+      return {
+        utm_source:   p.get('utm_source')   || '',
+        utm_medium:   p.get('utm_medium')   || '',
+        utm_campaign: p.get('utm_campaign') || '',
+        utm_content:  p.get('utm_content')  || '',
+        utm_term:     p.get('utm_term')     || ''
+      };
+    }
+
+    function persistUtms() {
+      var u = getUtmParams();
+      if (Object.values(u).some(function(v) { return v !== ''; }))
+        sessionStorage.setItem('_utms', JSON.stringify(u));
+    }
+
+    function recoverUtms() {
+      var cur = getUtmParams();
+      if (Object.values(cur).some(function(v) { return v !== ''; })) return cur;
+      try { return JSON.parse(sessionStorage.getItem('_utms') || '{}'); }
+      catch (e) { return {}; }
+    }
+
+    persistUtms();
+
+    // ── SUBMIT ────────────────────────────────────────────────
+    var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbydY8-J08O30HeChAJG2glWFZzNpT51TstrRlAqYt8C1SrGwoSYDJECHnpgF1znuxi7mw/exec';
+
+    async function handleWorkshopSubmit(e) {
+      if (e) e.preventDefault();
+
+      var nome     = document.querySelector('#form-lead-nome, [placeholder*="nome" i], input[name="nome"]')?.value?.trim();
+      var email    = document.querySelector('input[type="email"], [placeholder*="email" i], input[name="email"]')?.value?.trim();
+      var telefone = document.querySelector('input[type="tel"], [placeholder*="telefone" i], [placeholder*="whatsapp" i], [placeholder*="DDD" i], input[name="telefone"]')?.value?.trim();
+
+      if (!nome || !email || !telefone) {
+        alert('Por favor, preencha todos os campos.');
+        return;
+      }
+      if (!email.includes('@') || !email.includes('.')) {
+        alert('Por favor, insira um e-mail válido.');
+        return;
+      }
+
+      var btn = (e && e.submitter) || document.querySelector('#form-lead-modal-form [type="submit"]');
+      var originalHtml = btn ? btn.innerHTML : null;
+      if (btn) {
+        btn.disabled = true;
+        btn.style.opacity = '0.65';
+        var inner = btn.querySelector('.btn-beam-inner');
+        if (inner) inner.textContent = 'Enviando...';
+      }
+
+      var utms = recoverUtms();
+      var payload = Object.assign({ nome: nome, email: email, telefone: telefone }, utms, {
+        referrer:  document.referrer || 'direto',
+        userAgent: navigator.userAgent,
+        ip: ''
+      });
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      } catch (err) {
+        console.warn('Envio planilha:', err);
+      }
+
+      setTimeout(function() {
+        window.location.href = '/obrigado/';
+      }, 400);
+    }
+
     function openFormModal() {
       const modal = document.getElementById('form-lead-modal');
       if (!modal) return;
@@ -1661,10 +1739,8 @@
         });
       }
 
-      document.getElementById('form-lead-modal-form') && document.getElementById('form-lead-modal-form').addEventListener('submit', function (e) {
-        e.preventDefault();
-        closeFormModal();
-      });
+      var modalForm = document.getElementById('form-lead-modal-form');
+      if (modalForm) modalForm.addEventListener('submit', handleWorkshopSubmit);
 
       var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
