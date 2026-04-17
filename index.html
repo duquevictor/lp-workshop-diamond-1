@@ -787,18 +787,20 @@
         object-position: center top;
         -webkit-mask-image: linear-gradient(to bottom,
             black 0%,
-            black 35%,
-            rgba(0, 0, 0, 0.85) 50%,
-            rgba(0, 0, 0, 0.5) 65%,
-            rgba(0, 0, 0, 0.15) 80%,
-            transparent 95%);
+            black 25%,
+            rgba(0, 0, 0, 0.92) 40%,
+            rgba(0, 0, 0, 0.7) 55%,
+            rgba(0, 0, 0, 0.4) 70%,
+            rgba(0, 0, 0, 0.15) 82%,
+            transparent 92%);
         mask-image: linear-gradient(to bottom,
             black 0%,
-            black 35%,
-            rgba(0, 0, 0, 0.85) 50%,
-            rgba(0, 0, 0, 0.5) 65%,
-            rgba(0, 0, 0, 0.15) 80%,
-            transparent 95%);
+            black 25%,
+            rgba(0, 0, 0, 0.92) 40%,
+            rgba(0, 0, 0, 0.7) 55%,
+            rgba(0, 0, 0, 0.4) 70%,
+            rgba(0, 0, 0, 0.15) 82%,
+            transparent 92%);
         opacity: 0;
         animation: heroMobilePhotoIn 1s var(--ease-out-expo) forwards;
       }
@@ -818,30 +820,58 @@
         left: 0;
         right: 0;
         bottom: 0;
-        height: 55%;
+        height: 70%;
         pointer-events: none;
         z-index: 8;
         background: linear-gradient(to bottom,
             transparent 0%,
-            rgba(7, 10, 18, 0.3) 25%,
-            rgba(7, 10, 18, 0.7) 60%,
+            rgba(7, 10, 18, 0.15) 20%,
+            rgba(7, 10, 18, 0.5) 45%,
+            rgba(7, 10, 18, 0.85) 75%,
             var(--bg-body) 100%);
       }
 
       .hero-transition-bridge {
         position: absolute;
-        bottom: -80px;
+        bottom: -140px;
         left: 0;
         right: 0;
-        height: 200px;
+        height: 280px;
         pointer-events: none;
         z-index: 4;
         background: linear-gradient(to bottom,
             transparent 0%,
-            rgba(10, 14, 26, 0.4) 25%,
-            rgba(8, 12, 22, 0.75) 55%,
-            var(--bg-body) 85%,
+            rgba(10, 14, 26, 0.3) 20%,
+            rgba(8, 12, 22, 0.65) 45%,
+            rgba(7, 10, 18, 0.9) 70%,
+            var(--bg-body) 88%,
             var(--bg-body) 100%);
+      }
+
+      .hero-mobile-photo-frame::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px; /* 1px de sobreposição pra tapar o corte */
+        height: 80px;
+        background: linear-gradient(to bottom,
+            transparent 0%,
+            var(--bg-body) 100%);
+        pointer-events: none;
+        z-index: 9;
+      }
+
+      #o-que-voce-vai-aprender h2,
+      #quem-e-estevao h2 {
+        font-size: 1.25rem !important;
+        letter-spacing: 0.1em !important;
+        line-height: 1.2 !important;
+        white-space: nowrap;
+      }
+      
+      #o-que-voce-vai-aprender .reveal > span.h-px {
+        display: none;
       }
 
       .hero.blueprint-grid {
@@ -1127,7 +1157,7 @@
         <!-- BLOCO A — EYEBROW -->
         <div class="reveal flex w-full mb-6" style="margin-bottom: 3.5rem; justify-content: center; align-items: center; gap: 0.75rem;">
           <span class="h-px bg-blue-500/50" style="width: 2rem;"></span>
-          <h2 class="font-mono text-4xl md:text-5xl lg:text-6xl font-medium uppercase text-slate-200/55 leading-[1.1]" style="text-align: center; letter-spacing: 0.22em; margin-right: -0.22em;">
+          <h2 class="font-mono text-2xl md:text-5xl lg:text-6xl font-medium uppercase text-slate-200/55 leading-[1.1]" style="text-align: center; letter-spacing: 0.22em; margin-right: -0.22em;">
             <span class="lead-emphasis">O QUE VOCÊ VAI APRENDER</span><span class="lead-cursor"></span>
           </h2>
           <span class="h-px bg-blue-500/50" style="width: 2rem;"></span>
@@ -1216,7 +1246,7 @@
       <div class="container-xl relative z-10">
         
         <!-- BLOCO PRINCIPAL — TÍTULO DA SEÇÃO (H2) -->
-        <h2 class="reveal flex items-center justify-center text-center max-w-3xl mx-auto text-4xl md:text-5xl lg:text-6xl font-mono uppercase tracking-[0.22em] font-medium leading-[1.1] text-slate-50/95 mb-12 md:mb-16 pl-[0.22em]">
+        <h2 class="reveal flex items-center justify-center text-center max-w-3xl mx-auto text-2xl md:text-5xl lg:text-6xl font-mono uppercase tracking-[0.22em] font-medium leading-[1.1] text-slate-50/95 mb-12 md:mb-16 pl-[0.22em]">
           <span class="lead-emphasis">QUEM SERÁ SEU MENTOR</span><span class="lead-cursor">?</span>
         </h2>
         
