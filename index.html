@@ -886,26 +886,122 @@
       }
 
       .hero-photo--desktop {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: left center;
         display: block !important;
       }
 
       .hero {
-        display: flex;
-        align-items: center;
         min-height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
       }
 
       .hero.hero--fold-mobile {
         min-height: 100vh;
         max-height: none;
-        overflow: visible;
+        overflow: hidden;
       }
 
       .hero-bg-container {
         position: absolute;
-        inset: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 55%;
         height: 100%;
         min-height: 100%;
+        z-index: 1;
+      }
+
+      .hero-overlay {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 60%;
+        z-index: 2;
+        pointer-events: none;
+        background: 
+            linear-gradient(to right, 
+                rgba(7,10,18,0) 50%, 
+                rgba(7,10,18,0.7) 85%, 
+                var(--bg-body) 100%),
+            linear-gradient(to bottom, 
+                rgba(7,10,18,0.4) 0%, 
+                rgba(7,10,18,0) 30%, 
+                rgba(7,10,18,0) 70%, 
+                rgba(7,10,18,0.6) 100%);
+      }
+
+      .hero-copy {
+        position: relative;
+        z-index: 10;
+        grid-column: 2;
+        padding: 3rem 2rem 3rem 3rem;
+      }
+
+      .hero-copy > .grid {
+        grid-template-columns: 1fr !important;
+        gap: 0 !important;
+      }
+
+      .hero-copy > .grid > .hidden {
+        display: none !important;
+      }
+
+      .hero-copy .flex.flex-col {
+        align-items: flex-start !important;
+        text-align: left;
+      }
+
+      .hero-copy .hero-badge-desktop {
+        display: inline-flex;
+        margin-bottom: 2rem;
+      }
+
+      .hero-lead-text {
+        text-align: left !important;
+        font-size: clamp(2.25rem, 3.4vw, 3.25rem) !important;
+        font-weight: 700 !important;
+        line-height: 1.15 !important;
+        letter-spacing: -0.025em !important;
+        max-width: 100% !important;
+      }
+      
+      .h2-text {
+        text-align: left !important;
+        font-size: 1.25rem !important;
+        line-height: 1.7 !important;
+      }
+      
+      .hero-badge-desktop {
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.6rem 1.2rem;
+        border-radius: 9999px;
+        background: rgba(10, 14, 26, 0.55);
+        backdrop-filter: blur(14px);
+        border: 1px solid var(--border-soft);
+      }
+      
+      .hero-badge-desktop .badge-text {
+        font-size: 0.9rem !important;
+      }
+      
+      .hero-badge-desktop .badge-dot {
+        width: 10px !important;
+        height: 10px !important;
+      }
+
+      .hero-cta .btn-beam-inner {
+        padding: 1.15rem 2.8rem !important;
+        font-size: 1.05rem !important;
       }
 
       .hero-media {
@@ -1112,15 +1208,19 @@
           <div class="hidden lg:block" aria-hidden="true"></div>
           <div class="flex flex-col items-center">
 
+            <div class="hero-badge-desktop hidden md:inline-flex reveal" style="margin-bottom: 2rem;">
+              <span class="badge-dot animate-pulse"></span>
+              <span class="badge-text">AO VIVO • 27 DE ABRIL • 20H</span>
+            </div>
 
             <div class="hero-lead reveal delay-200">
-              <p class="hero-lead-text">
+              <h1 class="hero-lead-text">
                 Seu lead já foi 
                 <span class="lead-highlight-marker">abordado por 10 closers</span> 
                 antes de você. 
                 <span class="lead-emphasis">Ele reconhece o script</span><span 
                   class="lead-cursor">.</span>
-              </p>
+              </h1>
             </div>
 
             <div class="h2-wrapper reveal delay-300" style="margin-top: 1.75rem;">
