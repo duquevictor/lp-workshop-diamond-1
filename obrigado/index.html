@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inscrição Confirmada — Workshop CORTE · Estevão Souza</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
+  <script src="templates/digital-architect.aura.build/assets/resource_3fa48481346f.js"></script>
+  <script src="templates/digital-architect.aura.build/assets/iconify-icon_d39ffc6e4c56.js"></script>
+  <link href="templates/digital-architect.aura.build/assets/css2_19fd9cc6b396.css" rel="stylesheet" />
+
+  <style>
+    /* ========== TOKENS — DIAMOND SYSTEM ========== */
+    :root {
+      --bg-body: #070A12;
+      --bg-surface: rgba(255, 255, 255, 0.03);
+      --bg-surface-2: rgba(255, 255, 255, 0.05);
+      --bg-elevated: rgba(10, 14, 26, 0.72);
+      --text-primary: rgba(248, 250, 252, 0.92);
+      --text-secondary: rgba(226, 232, 240, 0.72);
+      --text-tertiary: rgba(148, 163, 184, 0.62);
+      --border-soft: rgba(59, 130, 246, 0.18);
+      --border-quiet: rgba(148, 163, 184, 0.14);
+      --border-hover: rgba(59, 130, 246, 0.28);
+      --brand-primary: #2563EB;
+      --brand-secondary: #1E40AF;
+      --brand-accent: #60A5FA;
+      --brand-ink: #0A0E1A;
+      --status-success: #10B981;
+      --status-warning: #F59E0B;
+      --status-error: #EF4444;
+      --font-sans: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100dvh;
+      font-family: var(--font-sans);
+      background: var(--bg-body);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    ::selection {
+      background: rgba(37, 99, 235, 0.35);
+      color: rgba(248, 250, 252, 0.95);
+    }
+
+    /* ========== ANIMAÇÕES — DIAMOND SYSTEM ========== */
+    @keyframes fadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(26px) scale(0.985);
+        filter: blur(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes beam-spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      33%       { transform: translate(22px, -44px); }
+      66%       { transform: translate(-16px, 18px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.7; transform: scale(1.2); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.35; }
+    }
+
+    @keyframes progressFill {
+      to { width: 90%; }
+    }
+
+    @keyframes shimmer {
+      0%   { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    @keyframes drawLine {
+      to { transform: scaleX(1); }
+    }
+
+    /* ========== UTILITÁRIOS — DIAMOND SYSTEM ========== */
+    .container-xl {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .blueprint-grid {
+      background-image:
+        linear-gradient(to right, rgba(59, 130, 246, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(59, 130, 246, 0.06) 1px, transparent 1px),
+        radial-gradient(800px circle at 18% 20%, rgba(37, 99, 235, 0.10), transparent 52%),
+        radial-gradient(900px circle at 82% 64%, rgba(96, 165, 250, 0.08), transparent 55%);
+      background-size: 56px 56px, 56px 56px, auto, auto;
+      background-position: center, center, center, center;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(2rem);
+      transition: all 1s var(--ease-out-expo);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-100 { transition-delay: 0.1s; }
+    .delay-200 { transition-delay: 0.2s; }
+    .delay-300 { transition-delay: 0.3s; }
+    .delay-400 { transition-delay: 0.4s; }
+    .delay-500 { transition-delay: 0.5s; }
+
+    /* ========== BLOCO A — BARRA DE COUNTDOWN ========== */
+    .countdown-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(10, 14, 26, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(59, 130, 246, 0.18);
+      padding: 0.75rem 0;
+      box-shadow: 0 2px 40px -10px rgba(37, 99, 235, 0.25);
+    }
+
+    .countdown-bar-inner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .countdown-label {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .countdown-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #EF4444;
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.7);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    .countdown-prefix {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(226, 232, 240, 0.7);
+    }
+
+    .countdown-blocks {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .countdown-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 52px;
+      padding: 0.4rem 0.7rem;
+      background: rgba(37, 99, 235, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.22);
+      border-radius: 0.5rem;
+    }
+
+    .countdown-value {
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: rgba(248, 250, 252, 0.95);
+      line-height: 1;
+      letter-spacing: 0.03em;
+    }
+
+    .countdown-label-small {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      color: rgba(148, 163, 184, 0.72);
+      text-transform: uppercase;
+      margin-top: 0.2rem;
+    }
+
+    .countdown-separator {
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
+      color: rgba(59, 130, 246, 0.5);
+      font-weight: 700;
+      line-height: 1;
+      transform: translateY(-6px);
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    /* ========== BLOCO B — HERO PRINCIPAL ========== */
+    .ty-main {
+      min-height: calc(100vh - 70px);
+      margin-top: 70px;
+      display: flex;
+      align-items: center;
+      padding: 3rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ty-content {
+      width: 100%;
+      max-width: 52rem;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    /* B1 — Badge */
+    .ty-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(37, 99, 235, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      border-radius: 9999px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(96, 165, 250, 0.95);
+      backdrop-filter: blur(8px);
+      margin-bottom: 2.5rem;
+    }
+
+    /* B2 — Barra de progresso */
+    .ty-progress {
+      max-width: 32rem;
+      margin: 0 auto 3rem;
+      width: 100%;
+    }
+
+    .ty-progress-labels {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.6rem;
+    }
+
+    .ty-progress-label-left {
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      color: rgba(226, 232, 240, 0.75);
+      font-weight: 500;
+    }
+
+    .ty-progress-label-right {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      font-weight: 600;
+      color: rgba(96, 165, 250, 0.9);
+    }
+
+    .ty-progress-track {
+      position: relative;
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .ty-progress-fill {
+      position: absolute;
+      inset: 0;
+      width: 0%;
+      background: linear-gradient(
+        90deg,
+        rgba(30, 64, 175, 0.9) 0%,
+        rgba(37, 99, 235, 1) 50%,
+        rgba(96, 165, 250, 0.95) 100%
+      );
+      border-radius: 999px;
+      box-shadow:
+        0 0 20px rgba(37, 99, 235, 0.4),
+        inset 0 0 8px rgba(255, 255, 255, 0.15);
+      animation: progressFill 1.8s var(--ease-out-expo) 0.4s forwards;
+    }
+
+    .ty-progress-fill::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.25) 50%,
+        transparent 100%
+      );
+      animation: shimmer 2.5s ease-in-out infinite;
+    }
+
+    /* B3 — H1 */
+    .ty-h1 {
+      font-family: var(--font-sans);
+      font-size: clamp(1.75rem, 4.5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: rgba(248, 250, 252, 0.95);
+      margin: 0 auto 2.5rem;
+      max-width: 42rem;
+      text-wrap: balance;
+      -webkit-text-wrap: balance;
+    }
+
+    .ty-h1-highlight {
+      color: rgba(248, 250, 252, 1);
+      font-weight: 800;
+    }
+
+    .ty-h1-emphasis {
+      background: linear-gradient(135deg, #60A5FA 0%, #93C5FD 50%, #60A5FA 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+    }
+
+    .ty-h1-underline {
+      position: relative;
+      color: rgba(248, 250, 252, 1);
+      font-weight: 700;
+    }
+
+    .ty-h1-underline::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -3px;
+      height: 3px;
+      background: linear-gradient(
+        90deg,
+        rgba(37, 99, 235, 0.8) 0%,
+        rgba(96, 165, 250, 0.4) 100%
+      );
+      transform: scaleX(0);
+      transform-origin: left center;
+      animation: drawLine 0.9s var(--ease-out-expo) 1.5s forwards;
+    }
+
+    /* B4 — Botão WhatsApp */
+    .ty-whatsapp-btn {
+      position: relative;
+      display: inline-flex;
+      padding: 2px;
+      border-radius: 9999px;
+      overflow: hidden;
+      cursor: pointer;
+      text-decoration: none;
+      transform: translateZ(0);
+      transition: transform 0.3s var(--ease-out-expo);
+      margin-bottom: 2rem;
+    }
+
+    .ty-whatsapp-btn:hover {
+      transform: scale(1.03);
+    }
+
+    .ty-whatsapp-btn-border {
+      position: absolute;
+      inset: -200%;
+      background: conic-gradient(
+        from 0deg,
+        transparent 0 310deg,
+        rgba(59, 130, 246, 0.95) 360deg
+      );
+      animation: beam-spin 3s linear infinite;
+    }
+
+    .ty-whatsapp-btn-inner {
+      position: relative;
+      background: linear-gradient(135deg, #0D1730 0%, #152647 100%);
+      color: rgba(248, 250, 252, 0.98);
+      border-radius: 9999px;
+      padding: 1.1rem 2.5rem;
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      z-index: 1;
+      box-shadow:
+        0 20px 40px -10px rgba(37, 99, 235, 0.35),
+        0 0 30px rgba(37, 99, 235, 0.18);
+      white-space: nowrap;
+    }
+
+    /* B5 — Instrução */
+    .ty-instruction {
+      font-family: var(--font-sans);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: rgba(226, 232, 240, 0.7);
+      max-width: 36rem;
+      margin: 0 auto;
+    }
+
+    .ty-instruction strong {
+      color: rgba(248, 250, 252, 0.95);
+      font-weight: 600;
+    }
+
+    /* B6 — Scarcity */
+    .ty-scarcity {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(148, 163, 184, 0.6);
+      margin-top: 3rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* ========== RESPONSIVO ========== */
+    @media (max-width: 640px) {
+      .countdown-bar-inner {
+        gap: 1rem;
+        padding: 0 0.75rem;
+      }
+
+      .countdown-prefix {
+        display: none;
+      }
+
+      .countdown-block {
+        min-width: 44px;
+        padding: 0.35rem 0.5rem;
+      }
+
+      .countdown-value {
+        font-size: 1rem;
+      }
+
+      .countdown-label-small {
+        font-size: 0.52rem;
+      }
+
+      .countdown-separator {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .ty-whatsapp-btn-inner {
+        padding: 1rem 1.5rem;
+        font-size: 0.82rem;
+        letter-spacing: 0.06em;
+      }
+
+      .ty-main {
+        padding: 2rem 1rem;
+      }
+    }
+
+    /* Btn-beam-wrapper reutilizado no estado "AO VIVO" */
+    .btn-beam-wrapper {
+      position: relative;
+      display: inline-flex;
+      padding: 2px;
+      border-radius: 9999px;
+      overflow: hidden;
+      cursor: pointer;
+      transform: translateZ(0);
+      transition: transform 0.3s var(--ease-out-expo);
+      text-decoration: none;
+    }
+
+    .btn-beam-wrapper:hover {
+      transform: scale(1.02);
+    }
+
+    .btn-beam-border {
+      position: absolute;
+      inset: -220%;
+      background: conic-gradient(from 0deg, transparent 0 310deg, rgba(59, 130, 246, 0.95) 360deg);
+      animation: beam-spin 3.2s linear infinite;
+      filter: saturate(1.05);
+    }
+
+    .btn-beam-inner {
+      position: relative;
+      background: rgba(10, 14, 26, 0.78);
+      color: rgba(248, 250, 252, 0.92);
+      border-radius: 9999px;
+      padding: 0.85rem 2rem;
+      font-size: 0.875rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      z-index: 1;
+      border: 1px solid rgba(59, 130, 246, 0.18);
+      backdrop-filter: blur(16px);
+    }
+
+    iconify-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       BLOCO A — BARRA FIXA COM COUNTDOWN
+       ============================================================ -->
+  <div class="countdown-bar" id="countdownBar">
+    <div class="countdown-bar-inner container-xl">
+
+      <div class="countdown-label">
+        <span class="countdown-dot"></span>
+        <span class="countdown-text">
+          <span class="countdown-prefix">WORKSHOP AO VIVO EM</span>
+        </span>
+      </div>
+
+      <div class="countdown-blocks">
+        <div class="countdown-block">
+          <span class="countdown-value" id="cdDays">--</span>
+          <span class="countdown-label-small">DIAS</span>
+        </div>
+        <span class="countdown-separator">:</span>
+        <div class="countdown-block">
+          <span class="countdown-value" id="cdHours">--</span>
+          <span class="countdown-label-small">HORAS</span>
+        </div>
+        <span class="countdown-separator">:</span>
+        <div class="countdown-block">
+          <span class="countdown-value" id="cdMinutes">--</span>
+          <span class="countdown-label-small">MIN</span>
+        </div>
+        <span class="countdown-separator">:</span>
+        <div class="countdown-block">
+          <span class="countdown-value" id="cdSeconds">--</span>
+          <span class="countdown-label-small">SEG</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================
+       BLOCO B — HERO PRINCIPAL
+       ============================================================ -->
+  <main class="ty-main blueprint-grid">
+
+    <!-- Orbs decorativos de fundo -->
+    <div
+      class="absolute top-20 -left-20 w-96 h-96 rounded-full blur-3xl bg-blue-600/10 pointer-events-none"
+      style="animation: float 14s infinite ease-in-out;">
+    </div>
+    <div
+      class="absolute bottom-20 -right-20 w-[28rem] h-[28rem] rounded-full blur-3xl bg-blue-500/8 pointer-events-none"
+      style="animation: float 18s infinite ease-in-out reverse;">
+    </div>
+
+    <div class="ty-content container-xl relative" style="z-index: 10;">
+
+      <!-- B1 — Badge de confirmação -->
+      <div style="display: flex; justify-content: center;">
+        <div class="ty-badge reveal">
+          <iconify-icon icon="solar:check-circle-bold-duotone" style="font-size: 1.1rem; color: rgba(96, 165, 250, 0.95);"></iconify-icon>
+          <span>INSCRIÇÃO CONFIRMADA</span>
+        </div>
+      </div>
+
+      <!-- B2 — Barra de progresso -->
+      <div class="ty-progress reveal delay-100">
+        <div class="ty-progress-labels">
+          <span class="ty-progress-label-left">Inscrição 90% concluída</span>
+          <span class="ty-progress-label-right">FALTA 1 PASSO</span>
+        </div>
+        <div class="ty-progress-track">
+          <div class="ty-progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- B3 — H1 de instrução -->
+      <h1 class="ty-h1 reveal delay-200">
+        Entre agora no grupo do
+        <span class="ty-h1-highlight">WhatsApp</span>
+        para confirmar
+        <span class="ty-h1-emphasis">100% sua inscrição</span>
+        e receber o link quando o
+        <span class="ty-h1-underline">workshop começar</span>.
+      </h1>
+
+      <!-- B4 — Botão principal WhatsApp -->
+      <div style="display: flex; justify-content: center;">
+        <a href="#" target="_blank" rel="noopener"
+          class="ty-whatsapp-btn reveal delay-300" id="whatsappBtn">
+          <span class="ty-whatsapp-btn-border"></span>
+          <span class="ty-whatsapp-btn-inner">
+            <iconify-icon icon="ic:baseline-whatsapp" style="font-size: 1.35rem;"></iconify-icon>
+            ENTRAR NO GRUPO SILENCIOSO
+            <iconify-icon icon="solar:arrow-right-linear" style="font-size: 1.1rem;"></iconify-icon>
+          </span>
+        </a>
+      </div>
+
+      <!-- B5 — Instrução adicional -->
+      <p class="ty-instruction reveal delay-400">
+        Após entrar no grupo, você vai receber o
+        <strong>link do workshop no seu WhatsApp</strong> poucos minutos
+        antes do início — <strong>27 de abril, 20h (horário de Brasília)</strong>.
+      </p>
+
+      <!-- B6 — Label de scarcity -->
+      <div style="display: flex; justify-content: center;">
+        <p class="ty-scarcity reveal delay-500">
+          <iconify-icon icon="solar:shield-check-linear" style="font-size: 0.85rem; vertical-align: -2px;"></iconify-icon>
+          Grupo silencioso — você não receberá mensagens além do aviso do workshop
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ============================================================
+       SCRIPTS
+       ============================================================ -->
+
+  <!-- Countdown -->
+  <script>
+    (function () {
+      // Data alvo: 27 de abril de 2026, 20h (horário de Brasília = UTC-3)
+      var targetDate = new Date('2026-04-27T20:00:00-03:00').getTime();
+
+      var elDays    = document.getElementById('cdDays');
+      var elHours   = document.getElementById('cdHours');
+      var elMinutes = document.getElementById('cdMinutes');
+      var elSeconds = document.getElementById('cdSeconds');
+      var bar       = document.getElementById('countdownBar');
+
+      function pad(num) {
+        return String(Math.max(0, num)).padStart(2, '0');
+      }
+
+      function updateCountdown() {
+        var now  = Date.now();
+        var diff = targetDate - now;
+
+        if (diff <= 0) {
+          bar.innerHTML = '\
+            <div class="countdown-bar-inner container-xl" style="justify-content:center;gap:1rem;">\
+              <span class="countdown-dot"></span>\
+              <span style="font-family:var(--font-mono);font-size:0.85rem;font-weight:600;\
+                letter-spacing:0.18em;text-transform:uppercase;color:#EF4444;">\
+                WORKSHOP AO VIVO AGORA\
+              </span>\
+              <a href="#" class="btn-beam-wrapper" style="transform:scale(0.85);">\
+                <span class="btn-beam-border"></span>\
+                <span class="btn-beam-inner" style="padding:0.5rem 1.25rem;font-size:0.75rem;">\
+                  ASSISTIR AGORA \u2192\
+                </span>\
+              </a>\
+            </div>';
+          return;
+        }
+
+        var days    = Math.floor(diff / (1000 * 60 * 60 * 24));
+        var hours   = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        var minutes = Math.floor((diff / (1000 * 60)) % 60);
+        var seconds = Math.floor((diff / 1000) % 60);
+
+        elDays.textContent    = pad(days);
+        elHours.textContent   = pad(hours);
+        elMinutes.textContent = pad(minutes);
+        elSeconds.textContent = pad(seconds);
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    })();
+  </script>
+
+  <!-- IntersectionObserver — reveal -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.reveal').forEach(function (el) {
+        observer.observe(el);
+      });
+    });
+  </script>
+
+</body>
+
+</html>
