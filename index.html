@@ -1678,13 +1678,42 @@
     // ── UTM CAPTURE ──────────────────────────────────────────
     function getUtmParams() {
       var p = new URLSearchParams(window.location.search);
+
+      // Tenta pegar mc_id direto da URL primeiro
+      var mcId = p.get('mc_id') || '';
+
+      // Fallback: se mc_id vier vazio, extrai do mcp_token (JWT que o ManyChat injeta automaticamente)
+      if (!mcId) {
+        var mcpToken = p.get('mcp_token') || '';
+        if (mcpToken) {
+          try {
+            // JWT tem 3 partes separadas por ponto: header.payload.signature
+            // Precisamos decodificar o payload (parte do meio) que está em base64url
+            var parts = mcpToken.split('.');
+            if (parts.length >= 2) {
+              // Converte base64url para base64 padrão (troca - por +, _ por /, adiciona padding)
+              var payloadB64 = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+              while (payloadB64.length % 4) { payloadB64 += '='; }
+              var payloadJson = atob(payloadB64);
+              var payload = JSON.parse(payloadJson);
+              if (payload && payload.sid) {
+                mcId = String(payload.sid);
+              }
+            }
+          } catch (err) {
+            // Se falhar o decode, segue sem mc_id — o lead ainda é salvo normalmente
+            console.warn('mcp_token decode falhou:', err);
+          }
+        }
+      }
+
       return {
         utm_source:   p.get('utm_source')   || '',
         utm_medium:   p.get('utm_medium')   || '',
         utm_campaign: p.get('utm_campaign') || '',
         utm_content:  p.get('utm_content')  || '',
         utm_term:     p.get('utm_term')     || '',
-        mc_id:        p.get('mc_id')        || ''
+        mc_id:        mcId
       };
     }
 
