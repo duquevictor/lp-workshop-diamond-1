@@ -1797,7 +1797,8 @@
       var payload = Object.assign({ nome: nome, email: email, telefone: telefone }, utms, {
         referrer:  document.referrer || 'direto',
         userAgent: navigator.userAgent,
-        ip: ''
+        ip: '',
+        variante: 'B'
       });
 
       try {
