@@ -1123,18 +1123,33 @@
       letter-spacing: -0.015em;
       color: rgba(248, 250, 252, 0.95);
       text-align: center;
-      text-wrap: balance;
-      -webkit-text-wrap: balance;
+      /* em telas estreitas, wrap natural; `balance` costuma forçar cortes estranhos no título */
+      text-wrap: wrap;
       max-width: 32rem;
+      width: 100%;
       margin: 0 auto;
       padding: 0 1.25rem;
       position: relative;
       z-index: 5;
     }
+    @media (min-width: 640px) {
+      .hero-lead-text {
+        text-wrap: balance;
+        -webkit-text-wrap: balance;
+      }
+    }
     @media (max-width: 480px) {
       .hero-lead-text {
         font-size: 1.45rem;
         padding: 0 1rem;
+      }
+    }
+    /* Mobile/hero: nada de balance aqui — quebras guiadas no HTML; desktop usa balance a partir de 640px */
+    @media (max-width: 767px) {
+      .hero-lead-text {
+        text-wrap: wrap;
+        -webkit-text-wrap: wrap;
+        line-height: 1.25;
       }
     }
     .lead-highlight-marker {
@@ -1332,17 +1347,19 @@
 
             <div class="hero-lead reveal delay-200">
               <h1 class="hero-lead-text">
-                Seu time fecha <span class="lead-emphasis">menos de 30%</span>.<br>
-                Você culpa o lead. Culpa o mercado. Culpa a&nbsp;economia.<br>
-                <span class="lead-highlight-marker">O problema é você.</span>
+                Como Estruturar um <br class="md:hidden" />
+                Sistema Comercial que <br class="md:hidden" />
+                Fecha Contratos de <br class="md:hidden" />
+                <span class="lead-emphasis">R$10k</span> à <span class="lead-emphasis">R$70k</span> em <br class="md:hidden" />
+                Uma Única Call.
               </h1>
             </div>
 
             <div class="h2-wrapper reveal delay-300" style="margin-top: 1.75rem;">
               <div class="h2-content">
-                <p class="h2-text">
-                  Nesse workshop eu vou te entregar todo o sistema que levou nossa operação de <span class="h2-highlight">R$50k para R$3MM por mês</span>, já validado em mais de <span class="h2-highlight">200 operações comerciais</span>.
-                </p>
+                <h2 class="h2-text">
+                  A metodologia que transforma cada call em <span class="h2-highlight">venda fechada no mesmo dia</span>, com clientes que pagam o ticket cheio, indicam outros e voltam a comprar. <span class="h2-highlight">Sem desconto, sem pressão e sem parecer vendedor.</span>
+                </h2>
               </div>
             </div>
 
